@@ -89,6 +89,7 @@ cpuinfo() {
 }
 
 bootcfg() {
+	bootctl install
 	model=$(cpuinfo)
 	root=$(df | awk '$6 == "/" {print $1}')
 	cfg=/boot/loader/entries/arch.conf
@@ -104,7 +105,7 @@ bootcfg() {
 	fi
 	echo initrd /initramfs-linux.img >> $cfg
 	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >> $cfg
-	bootctl install
+	bootctl update
 }
 
 case "$1" in
