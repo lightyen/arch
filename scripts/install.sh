@@ -44,6 +44,12 @@ setHostname() {
 	echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 }
 
+setVim() {
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o ~/.vimrc
+    vim -c 'PluginInstall' -c 'qa!'
+}
+
 init() {
 	setLocaltime
 	setLocale
@@ -51,19 +57,22 @@ init() {
 }
 
 case "$1" in
-"set_locale")
+"locale")
     setLocale
 	;;
-"set_localtime")
+"localtime")
     setLocaltime
 	;;
-"set_hostname")
+"hostname")
     setHostname
 	;;
-"install")
+"vim")
+    setVim
+    ;;
+"start")
 	init
 	;;
 *)
-	echo "    install | set_localtime | set_localtime | set_hostname"
+	echo "    start | localtime | localtime | hostname | vim"
 esac
 
