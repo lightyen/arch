@@ -2,23 +2,23 @@
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
-	yes | pacman -S pacman-contrib 1>/dev/null 2>&1
+	yes "" | pacman -S pacman-contrib 1>/dev/null 2>&1
 	curl -fsSL "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
 	sed -i 's/^#\(.*\)/\1/' $mirrorlist
 	cp $mirrorlist $mirrorlist.backup
 	echo "ranking top 5 mirror source..."
 	rankmirrors -n 5 $mirrorlist.backup > $mirrorlist
 	rm $mirrorlist.backup
-	yes | pacman -Rcs pacman-contrib 1>/dev/null 2>&1
+	yes "" | pacman -Rcs pacman-contrib 1>/dev/null 2>&1
 }
 
 network() {
 	openssh=$(read -r -p "Install openssh? [y/n] ")
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
-			yes | pacman -S openssh 1>/dev/null 2>&1
+			yes "" | pacman -S openssh 1>/dev/null 2>&1
 			systemctl enable sshd
 	fi
-	yes | pacman -S dhcpcd networkmanager 1>/dev/null 2>&1
+	yes "" | pacman -S dhcpcd networkmanager 1>/dev/null 2>&1
 	systemctl enable dhcpcd
 	systemctl enable NetworkManager
 }
@@ -97,10 +97,10 @@ bootcfg() {
 	echo "title Arch Linux" > $cfg
 	echo "linux /vmlinuz-linux" >> $cfg
 	if [ $model == "intel" ]; then
-		yes | pacman -S intel-ucode 1>/dev/null 2>&1
+		yes "" | pacman -S intel-ucode 1>/dev/null 2>&1
 		echo "initrd /intel-ucode.img" >> $cfg
 	elif [ $model == "amd" ]; then
-		yes | pacman -S amd-ucode 1>/dev/null 2>&1
+		yes "" | pacman -S amd-ucode 1>/dev/null 2>&1
 		echo "initrd /amd-ucode.img" >> $cfg
 	fi
 	echo "initrd /initramfs-linux.img" >> $cfg
