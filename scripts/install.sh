@@ -17,13 +17,10 @@ network() {
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
 			yes | pacman -S openssh 1>/dev/null 2>&1
 			systemctl enable sshd
-			systemctl start sshd
 	fi
 	yes | pacman -S dhcpcd networkmanager 1>/dev/null 2>&1
 	systemctl enable dhcpcd
-	systemctl start dhcpcd
 	systemctl enable NetworkManager
-	systemctl start NetworkManager
 }
 
 setLocaltime() {
