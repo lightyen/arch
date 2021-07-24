@@ -1,0 +1,9 @@
+[user]
+	name = lightyen
+	email = lightyen0123@gmail.com
+
+[init]
+	defaultBranch = main
+
+[format]
+	pretty = %C(auto)%h %C(auto)[%ci] %C(auto)%s%d
