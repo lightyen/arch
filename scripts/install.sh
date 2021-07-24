@@ -92,19 +92,18 @@ bootcfg() {
 	model=$(cpuinfo)
 	root=$(df | awk '$6 == "/" {print $1}')
 	cfg=/boot/loader/entries/arch.conf
-	echo "default arch" > /boot/loader/loader.conf
-	touch $cfg
-	echo "title Arch Linux" > $cfg
-	echo "linux /vmlinuz-linux" >> $cfg
+	echo default arch > /boot/loader/loader.conf
+	echo title Arch Linux > $cfg
+	echo linux /vmlinuz-linux >> $cfg
 	if [ $model == "intel" ]; then
 		yes "" | pacman -S intel-ucode 1>/dev/null 2>&1
-		echo "initrd /intel-ucode.img" >> $cfg
+		echo initrd /intel-ucode.img >> $cfg
 	elif [ $model == "amd" ]; then
 		yes "" | pacman -S amd-ucode 1>/dev/null 2>&1
-		echo "initrd /amd-ucode.img" >> $cfg
+		echo initrd /amd-ucode.img >> $cfg
 	fi
-	echo "initrd /initramfs-linux.img" >> $cfg
-	echo "options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw" >> $cfg
+	echo initrd /initramfs-linux.img >> $cfg
+	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >> $cfg
 	bootctl install
 }
 
