@@ -71,12 +71,16 @@ setLocale() {
 }
 
 setHostname() {
-	hostname="archlinux"
-	read -r -p "Enter hostname ($hostname): " hostname
-	echo -e $hostname > /etc/hostname
+	default_hostname=archlinux
+	read -r -p "Enter hostname ($default_hostname): " name
+	name=${name:-$default_hostname}
+	if [ $name == y ]; then
+		name=$default_hostname
+	fi
+	echo -e $name > /etc/hostname
 	echo -e "127.0.0.1\tlocalhost" > /etc/hosts
 	echo -e "::1\t\tlocalhost" >> /etc/hosts
-	echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
+	echo -e "127.0.1.1\t$name.localdomain\t$name" >> /etc/hosts
 }
 
 cpuinfo() {
@@ -107,16 +111,6 @@ bootcfg() {
 	bootctl install
 }
 
-
-init() {
-	bootcfg
-	setLocale
-	setLocaltime
-	setHostname
-	mirrorlist
-	network
-}
-
 case "$1" in
 "mirrorlist")
 	mirrorlist
@@ -136,10 +130,12 @@ case "$1" in
 "bootcfg")
     bootcfg
 	;;
-"start")
-	init
-	;;
 *)
-	echo "install start | localtime | localtime | hostname | mirrorlist | netowrk | bootcfg"
+	bootcfg
+	setLocale
+	setLocaltime
+	setHostname
+	mirrorlist
+	network
 esac
 
