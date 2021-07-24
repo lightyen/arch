@@ -92,8 +92,8 @@ bootcfg() {
 	model=$(cpuinfo)
 	root=$(df | awk '$6 == "/" {print $1}')
 	cfg=/boot/loader/entries/arch.conf
-
 	echo "default arch" > /boot/loader/loader.conf
+	touch $cfg
 	echo "title Arch Linux" > $cfg
 	echo "linux /vmlinuz-linux" >> $cfg
 	if [ $model == "intel" ]; then
