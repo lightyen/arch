@@ -1,13 +1,47 @@
 #!/bin/sh
 
+mirrorlist() {
+	mirrorlist=/etc/pacman.d/mirrorlist
+	yes | pacman -S pacman-contrib 1>/dev/null 2>&1
+	curl -fsSL "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
+	sed -i 's/^#\(.*\)/\1/' $mirrorlist
+	cp $mirrorlist $mirrorlist.backup
+	echo "ranking top 5 mirror source..."
+	rankmirrors -n 5 $mirrorlist.backup > $mirrorlist
+	rm $mirrorlist.backup
+	yes | pacman -Rcs pacman-contrib 1>/dev/null 2>&1
+}
+
+network() {
+	openssh=$(read -r -p "Install openssh? [y/n] ")
+	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
+			yes | pacman -S openssh 1>/dev/null 2>&1
+			systemctl enable sshd
+			systemctl start sshd
+	fi
+	yes | pacman -S dhcpcd networkmanager 1>/dev/null 2>&1
+	systemctl enable dhcpcd
+	systemctl start dhcpcd
+	systemctl enable NetworkManager
+	systemctl start NetworkManager
+}
+
 setLocaltime() {
 	region_city="Asia/Taipei"
-	read -r -p "Enter Region/City ($region_city): " region_city
-	region_city=Asia/Taipei
-	if [ -e "/usr/share/zoneinfo/$region_city" ]; then
-		ln -sf /usr/share/zoneinfo/$region_city /etc/localtime
-		hwclock --systohc
-	fi
+	while read -r -p "Enter Region/City ($region_city): " timezone
+	do
+		if [ -z "$timezone" ] || [ "$locale" == y ]; then
+			ln -sf /usr/share/zoneinfo/$region_city /etc/localtime
+			hwclock --systohc
+			break
+		elif [ -e "/usr/share/zoneinfo/$timezone" ]; then
+			ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
+			hwclock --systohc
+			break
+		else
+			echo -e "Not found: /usr/share/zoneinfo/${timezone}"
+		fi
+	done
 }
 
 setLocale() {
@@ -16,9 +50,9 @@ setLocale() {
 	while read -r -p "Enter Locale (${locale_list[*]}): " locale
 	do
 		locale=$(echo ${locale} | tr '-' '_')
-		if [ -z "$locale" ]; then
+		if [ -z "$locale" ] || [ "$locale" == y ]; then
 			break
-		elif [ "" == "$(grep -E $(echo "^#?${locale}\.UTF-8") /etc/locale.gen)" ]; then
+		elif [ -z "$(grep -E $(echo "^#?${locale}\.UTF-8") /etc/locale.gen)" ]; then
 			echo -e "Not found: ${locale}.UTF-8"
 		else
 			locale_list[$i]=${locale}
@@ -33,6 +67,7 @@ setLocale() {
 	done
 
 	locale-gen
+	echo LANG=en_US.UTF-8 > /etc/locale.conf
 }
 
 setHostname() {
@@ -44,21 +79,48 @@ setHostname() {
 	echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 }
 
-setVim() {
-    echo "setup vim environment..."
-    rm -rf ~/.vim
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
-    curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o ~/.vimrc
-    yes | vim -c 'PluginInstall' -c 'qa!' 1>/dev/null 2>&1
+cpuinfo() {
+	if [ -n "$(lscpu | grep -i intel)" ]; then
+		echo intel
+	elif [ -n "$(lscpu | grep -i amd)" ]; then
+		echo amd
+	fi
 }
 
+bootcfg() {
+	model=$(cpuinfo)
+	root=$(df | awk '$6 == "/" {print $1}')
+	cfg=/boot/loader/entries/arch.conf
+
+	echo "default arch" > /boot/loader/loader.conf
+	echo "title Arch Linux" > $cfg
+	echo "linux /vmlinuz-linux" >> $cfg
+	if [ $model == "intel" ]; then
+		yes | pacman -S intel-ucode 1>/dev/null 2>&1
+		echo "initrd /intel-ucode.img" >> $cfg
+	elif [ $model == "amd" ]; then
+		yes | pacman -S amd-ucode 1>/dev/null 2>&1
+		echo "initrd /amd-ucode.img" >> $cfg
+	fi
+	echo "initrd /initramfs-linux.img" >> $cfg
+	echo "options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw" >> $cfg
+	bootctl install
+}
+
+
 init() {
-	setLocaltime
+	bootcfg
 	setLocale
+	setLocaltime
 	setHostname
+	mirrorlist
+	network
 }
 
 case "$1" in
+"mirrorlist")
+	mirrorlist
+	;;
 "locale")
     setLocale
 	;;
@@ -68,13 +130,16 @@ case "$1" in
 "hostname")
     setHostname
 	;;
-"vim")
-    setVim
-    ;;
+"network")
+    network
+	;;
+"bootcfg")
+    bootcfg
+	;;
 "start")
 	init
 	;;
 *)
-	echo "    start | localtime | localtime | hostname | vim"
+	echo "install start | localtime | localtime | hostname | mirrorlist | netowrk | bootcfg"
 esac
 
