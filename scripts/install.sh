@@ -13,7 +13,7 @@ mirrorlist() {
 		servers > $mirrorlist
 	}
 	yes "" | pacman -Rcs pacman-contrib
-	sed -E -i "s/^#(ParallelDownloads.*)/\1/" /etc/pacman.conf
+	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
 }
 
 network() {
