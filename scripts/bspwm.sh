@@ -5,5 +5,5 @@ mkdir -p ~/.config/sxhkd
 mkdir -p ~/.config/bspwm
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/sxhkdrc -o ~/.config/sxhkd/sxhkdrc
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/bspwmrc -o ~/.config/bspwm/bspwmrc
-chmod 755 ~/.config/sxhkd/sxhkdrc
-chmod 644 ~/.config/bspwm/bspwmrc
+chmod 644 ~/.config/sxhkd/sxhkdrc
+chmod 755 ~/.config/bspwm/bspwmrc
