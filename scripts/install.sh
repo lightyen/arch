@@ -2,6 +2,7 @@
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
+	conf=/etc/pacman.conf
 	yes "" | pacman -S pacman-contrib
 	curl -fsSL "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
 	sed -i 's/^#\(.*\)/\1/' $mirrorlist
@@ -13,7 +14,7 @@ mirrorlist() {
 		servers > $mirrorlist
 	}
 	yes "" | pacman -Rcs pacman-contrib
-	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
+	sed -E -i 's/^#(ParallelDownloads.*)/\1/' $conf
 }
 
 network() {
