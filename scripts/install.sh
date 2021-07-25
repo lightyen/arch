@@ -138,6 +138,5 @@ case "$1" in
 	setHostname
 	network
 	mirrorlist
-	passwd
 esac
 
