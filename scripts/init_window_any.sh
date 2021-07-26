@@ -29,3 +29,9 @@ echo "XMODIFIERS=@im=fcitx" >> /etc/environment
 
 sed -i 's/^Current=$/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
 systemctl enable sddm
+
+curl -fsSL "https://raw.githubusercontent.com/lightyen/arch/main/scripts/aur_helper.sh" -o aur_helper
+chmod +x aur_helper
+./aur_helper microsoft-edge-beta-bin
+./aur_helper visual-stuio-code-bin
+rm -f aur_helper

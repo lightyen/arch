@@ -1,0 +1,7 @@
+[Default Applications]
+inode/directory=org.gnome.Nautilus.desktop
+text/html=microsoft-edge-beta.desktop
+x-scheme-handler/about=microsoft-edge-beta.desktop
+x-scheme-handler/http=microsoft-edge-beta.desktop
+x-scheme-handler/https=microsoft-edge-beta.desktop
+x-scheme-handler/unknown=microsoft-edge-beta.desktop
