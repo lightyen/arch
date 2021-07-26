@@ -2,7 +2,7 @@
 
 cd $HOME
 
-echo "setup vim environment..."
+echo "vim environment..."
 rm -rf $HOME/.vim
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
