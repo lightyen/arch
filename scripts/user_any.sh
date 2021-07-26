@@ -9,6 +9,7 @@ curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o ~/.vim
 yes "" | vim -c 'PluginInstall' -c 'qa!' 1>/dev/null 2>&1
 
 ZSH=
+rm -rf $HOME/.oh-my-zsh
 curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/templates/zshrc.zsh-template" -o .zshrc
 echo "y" | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-completions
