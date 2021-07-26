@@ -6,4 +6,4 @@ echo "setup $username..."
 useradd -m $username
 runuser -l $username -c "$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/v/user.sh)"
 chsh --shell $(which zsh) $username
-echo "$password\n$password\n" | passwd $username
+echo -e "$password\n$password" | passwd $username
