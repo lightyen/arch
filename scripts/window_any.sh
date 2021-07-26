@@ -1,20 +1,6 @@
 #!/bin/sh
 
-pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller
-
-cat /usr/lib/sddm/sddm.conf.d/default.conf
-
-
-curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/picom.conf -o /etc/xdg/picom.conf
-
-pacman -S fcitx-im fcitx-chewing fcitx-
-
-echo "GTK_IM_MODULE=fcitx" >> /etc/environment
-echo "QT_IM_MODULE=fcitx" >> /etc/environment
-echo "XMODIFIERS=@im=fcitx" >> /etc/environment
-
-
-pacman -S p7zip
+pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip fcitx-im fcitx-chewing fcitx-configtool plasma
 
 mkdir -p /usr/local/share/fonts
 
@@ -25,11 +11,19 @@ mkdir -p /usr/local/share/fonts/sarasa
 curl -fsSL https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKtc-hinted.zip -o NotoSansCJKtc-hinted.zip
 unzip NotoSansCJKtc-hinted.zip -d NotoSansCJKtc
 mkdir -p /usr/local/share/fonts/NotoSansCJKtc
-mv Noto/*.otf /usr/local/share/fonts/NotoSansCJKtc
-rm -rf Noto NotoSansCJKtc-hinted.zip
+mv NotoSansCJKtc/*.otf /usr/local/share/fonts/NotoSansCJKtc
+rm -rf NotoSansCJKtc NotoSansCJKtc-hinted.zip
 
 curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2106.17/CascadiaCode-2106.17.zip -o CascadiaCode-2106.17.zip
 unzip CascadiaCode-2106.17.zip -d CascadiaCode
 mv CascadiaCode/ttf /usr/local/share/fonts/CascadiaCode
+rm -rf CascadiaCode
 
-fc-cache -sfv
+fc-cache -sf
+
+echo "GTK_IM_MODULE=fcitx" >> /etc/environment
+echo "QT_IM_MODULE=fcitx" >> /etc/environment
+echo "XMODIFIERS=@im=fcitx" >> /etc/environment
+
+sed -i 's/^Current=$/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+systemctl enable sddm
