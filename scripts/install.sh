@@ -112,6 +112,11 @@ bootcfg() {
 	bootctl update
 }
 
+others() {
+	yes "" | pacman -S sudo vim zsh git
+	chsh -s /bin/zsh
+}
+
 case "$1" in
 "mirrorlist")
 	mirrorlist
@@ -131,6 +136,9 @@ case "$1" in
 "bootcfg")
     bootcfg
 	;;
+"others")
+    others
+	;;
 *)
 	bootcfg
 	setLocale
@@ -138,5 +146,5 @@ case "$1" in
 	setHostname
 	network
 	mirrorlist
+	others
 esac
-
