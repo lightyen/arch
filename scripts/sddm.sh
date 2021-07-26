@@ -1,7 +1,12 @@
 #!/bin/sh
 
 pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller
+
+cat /usr/lib/sddm/sddm.conf.d/default.conf
+
+
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/picom.conf -o /etc/xdg/picom.conf
+
 pacman -S fcitx-im fcitx-chewing fcitx-
 
 echo "GTK_IM_MODULE=fcitx" >> /etc/environment
