@@ -28,6 +28,7 @@ mkdir -p $HOME/.config/bspwm
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/bspwmrc -o $HOME/.config/bspwm/bspwmrc
 chmod 755 $HOME/.config/bspwm/bspwmrc
 
+fcitx
 sed -i 's/^#Font=Sans/Font=Noto Sans CJK TC/1' $HOME/.config/fcitx/conf/fcitx-classic-ui.config
 sed -i 's/^#MenuFont=Sans/MenuFont=Noto Sans Mono CJK TC/1' $HOME/.config/fcitx/conf/fcitx-classic-ui.config
 sed -i 's/^#FontLocale=zh_CN.UTF-8/FontLocale=zh_TW.UTF-8/1' $HOME/.config/fcitx/conf/fcitx-classic-ui.config
