@@ -1,6 +1,7 @@
 #!/bin/sh
 
-pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip fcitx-im fcitx-chewing fcitx-configtool plasma
+yes "" | pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip plasma
+yes "" | pacman -S fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
 
 mkdir -p /usr/local/share/fonts
 

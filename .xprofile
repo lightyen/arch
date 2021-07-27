@@ -1,4 +1,4 @@
 export LANG=zh_TW.UTF-8
 picom --experimental-backends &
-fcitx &
+fcitx5 &
 nitrogen --restore &
