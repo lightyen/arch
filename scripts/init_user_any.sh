@@ -9,6 +9,7 @@ mkdir -p $HOME/.config
 cp -r $HOME/arch/user_config/* $HOME/.config
 chmod 644 $HOME/.config/sxhkd/sxhkdrc
 chmod 755 $HOME/.config/bspwm/bspwmrc
+rm -rf $HOME/arch
 
 echo "vim environment..."
 rm -rf $HOME/.vim
