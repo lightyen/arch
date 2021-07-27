@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 cd $HOME
 
 git clone https://github.com/lightyen/arch.git $HOME/arch
