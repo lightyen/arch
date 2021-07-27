@@ -33,8 +33,10 @@ fc-cache -fv
 echo "GTK_IM_MODULE=fcitx" >> /etc/environment
 echo "QT_IM_MODULE=fcitx" >> /etc/environment
 echo "XMODIFIERS=@im=fcitx" >> /etc/environment
+echo "GTK_THEME=Breeze-Dark:dark" >> /etc/environment
 
 sed -i 's/^Current=$/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
+sed -i 's/^Numlock=none/Numlock=on/' /usr/lib/sddm/sddm.conf.d/default.conf
 systemctl enable sddm
 
 curl -fsSL "https://raw.githubusercontent.com/lightyen/arch/main/scripts/aur_helper.sh" -o aur_helper
