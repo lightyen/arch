@@ -1,6 +1,14 @@
 #!/bin/sh
 
+set -e
+
 cd $HOME
+
+git clone https://github.com/lightyen/arch.git $HOME/arch
+mkdir -p $HOME/.config
+cp -r $HOME/arch/user_config/* $HOME/.config
+chmod 644 $HOME/.config/sxhkd/sxhkdrc
+chmod 755 $HOME/.config/bspwm/bspwmrc
 
 echo "vim environment..."
 rm -rf $HOME/.vim
@@ -16,10 +24,3 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:=$HOME/.
 sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/1' $HOME/.zshrc
 sed -i 's/plugins=(git)/plugins=(git zsh-completions zsh-autosuggestions)/1' $HOME/.zshrc
 echo "autoload -U compinit && compinit" | zsh
-
-git clone https://github.com/lightyen/arch.git -o $HOME/arch
-mkdir -p $HOME/.config
-cp -r $HOME/arch/user_config/* $HOME/.config
-
-chmod 644 $HOME/.config/sxhkd/sxhkdrc
-chmod 755 $HOME/.config/bspwm/bspwmrc
