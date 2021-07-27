@@ -1,0 +1,147 @@
+[Hotkey]
+# 切換啟用或非啟用輸入法
+#TriggerKey=CTRL_SPACE
+# 只在用額外切換鍵取消啟動後才使用它進行切換
+# 可選值：
+# True False
+#UseExtraTriggerKeyOnlyWhenUseItToInactivate=True
+# 額外的啟用輸入法快捷鍵
+# 可選值：
+# R_CTRL
+# R_SHIFT
+# L_SHIFT
+# L_CTRL
+# ALT_L_SHIFT
+# ALT_R_SHIFT
+# CTRL Both
+# SHIFT Both
+# L_ALT
+# R_ALT
+# ALT Both
+# Left Super
+# Right Super
+# Super Both
+# Ctrl+Left Super
+# Ctrl+Right Super
+# Super+Left Ctrl
+# Super+Right Ctrl
+# Disabled
+# Custom
+#SwitchKey=L_SHIFT
+# 自訂切換鍵
+#CustomSwitchKey=
+# 啟用輸入法
+#ActivateKey=
+# 不啟用輸入法
+#InactivateKey=
+# 啟用輸入法間切換
+# 可選值：
+# True False
+#IMSwitchKey=True
+# 輸入法間切換時包含未啟用狀態
+# 可選值：
+# True False
+#IMSwitchIncludeInactive=False
+# 輸入法切換鍵
+# 可選值：
+# CTRL_SHIFT
+# ALT_SHIFT
+# CTRL_SUPER
+# ALT_SUPER
+#IMSwitchHotkey=CTRL_SHIFT
+# 重新載入設定
+#ReloadConfig=CTRL_5
+# 輸入間隔
+#TimeInterval=250
+# 切換虛擬鍵盤
+#VKSwitchKey=CTRL_ALT_B
+# 切換聯想模式
+#RemindSwitchKey=
+# 切換全形字元模式
+#FullWidthSwitchKey=
+# 切換全形標點符號
+#PuncSwitchKey=CTRL_.
+# 上一頁
+#PrevPageKey=- UP
+# 下一頁
+#NextPageKey== DOWN
+# 選擇第二第三候選詞
+#SecondThirdCandWordKey=
+# 保存所有設定及輸入歷史
+#SaveAllKey=CTRL_ALT_S
+# 切換內嵌預編輯區域
+#SwitchPreedit=CTRL_ALT_P
+# 前一個候選字
+#PrevWord=SHIFT_TAB
+# 下一個候選字
+#NextWord=TAB
+
+[Program]
+# Fcitx 真正啟動前延遲的秒數
+#DelayStart=0
+# 在視窗間共享狀態
+# 可選值：
+# No
+# All
+# PerProgram
+#ShareStateAmongWindow=No
+# 預設輸入法狀態
+# 可選值：
+# Inactive
+# Active
+#DefaultInputMethodState=Inactive
+
+[Output]
+# 數字後跟半形標點符號
+# 可選值：
+# True False
+#HalfPuncAfterNumber=True
+# 聯想模式停用翻頁
+# 可選值：
+# True False
+#RemindModeDisablePaging=True
+# 切換狀態時提交
+# 可選值：
+# True False
+#SendTextWhenSwitchEng=True
+# 候選字數
+#CandidateWordNumber=5
+# 提示詞庫中字詞
+# 可選值：
+# True False
+#PhraseTips=True
+# 未聚焦視窗時，不要提交預編輯文字
+# 可選值：
+# True False
+#DontCommitPreeditWhenUnfocus=False
+
+[Appearance]
+# 切換輸入法時顯示輸入法提示
+# 可選值：
+# True False
+#ShowInputWindowAfterTriggering=True
+# 獲得輸入焦點並且輸入法變化時顯示輸入法提示
+# 可選值：
+# True False
+#ShowInputWindowWhenFocusIn=False
+# 輸入法提示只在啟用狀態顯示
+# 可選值：
+# True False
+#ShowInputWindowOnlyWhenActive=True
+# 顯示輸入速度
+# 可選值：
+# True False
+#ShowInputSpeed=False
+# 顯示版本
+# 可選值：
+# True False
+#ShowVersion=False
+# 只有預編輯字串時不顯示輸入視窗
+# 可選值：
+# True False
+#HideInputWindowWhenOnlyPreeditString=False
+# 只有一個候選詞和預編輯字串時不顯示輸入視窗
+# 可選值：
+# True False
+#HideInputWindowWhenOnlyOneCandidate=False
+
