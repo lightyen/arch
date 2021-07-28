@@ -113,7 +113,7 @@ bootcfg() {
 }
 
 others() {
-	yes "" | pacman -S sudo vim zsh git
+	yes "" | pacman -S sudo vim zsh git base-devel
 	chsh -s /bin/zsh
 }
 
