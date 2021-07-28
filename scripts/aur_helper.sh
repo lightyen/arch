@@ -5,8 +5,7 @@ git clone https://aur.archlinux.org/$1
 if [ -e $1/PKGBUILD ]; then
 	chown -R nobody $1
 	cd $1
-	if sudo -u nobody makepkg; then
-	else
+	if ! sudo -u nobody makepkg; then
 		sudo -u nobody makepkg -d
 	fi
 	target=$(compgen -G "*.pkg.tar.*")
