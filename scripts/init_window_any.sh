@@ -5,13 +5,6 @@ yes "" | pacman -S fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fci
 
 mkdir -p /usr/local/share/fonts
 
-curl -fsSL https://github.com/be5invis/Sarasa-Gothic/releases/download/v0.32.14/sarasa-gothic-ttf-0.32.14.7z -o ./sarasa-gothic-ttf-0.32.14.7z
-if [ -e sarasa-gothic-ttf-0.32.14.7z ]; then
-	mkdir -p /usr/local/share/fonts/sarasa
-	7z x -o/usr/local/share/fonts/sarasa sarasa-gothic-ttf-0.32.14.7z
-	chmod 644 /usr/local/share/fonts/sarasa/*.ttf
-fi
-
 curl -fsSL https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKtc-hinted.zip -o NotoSansCJKtc-hinted.zip
 if [ -e NotoSansCJKtc-hinted.zip ]; then
 	unzip NotoSansCJKtc-hinted.zip -d NotoSansCJKtc
