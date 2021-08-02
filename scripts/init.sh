@@ -131,23 +131,23 @@ others() {
 }
 
 case "$1" in
-"mirrorlist")
-	mirrorlist
+"bootcfg")
+	bootcfg
 	;;
 "locale")
-    setLocale
+	setLocale
 	;;
 "localtime")
-    setLocaltime
+	setLocaltime
 	;;
 "hostname")
-    setHostname
+	setHostname
 	;;
 "network")
     network
 	;;
-"bootcfg")
-    bootcfg
+"mirrorlist")
+	mirrorlist
 	;;
 "others")
     others
