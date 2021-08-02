@@ -305,7 +305,7 @@ Plugin 'joshdick/onedark.vim'
 call vundle#end()
 filetype plugin indent on
 
-if &term == "alacritty"        
+if &term == "alacritty"
   let &term = "xterm-256color"
 endif
 
@@ -330,7 +330,7 @@ let g:gitgutter_async = 0
 let g:gitgutter_enabled = 0
 set autochdir
 let NERDTreeChDirMode=2
-au VimEnter NERD_tree_1 enew | execute 'NERDTree '.argv()[0] 
+au VimEnter NERD_tree_1 enew | execute 'NERDTree '.argv()[0]
 
 
 " NERDTree
@@ -372,7 +372,7 @@ set fileformats=unix,dos,mac " Prefer Unix over Windows over OS 9 formats
 set noshowmatch              " Do not show matching brackets by flickering
 set noshowmode               " We show the mode with airline or lightline
 set ignorecase               " Search case insensitive...
-set smartcase                " ... but not it begins with upper case 
+set smartcase                " ... but not it begins with upper case
 set completeopt=menu,menuone
 set nocursorcolumn           " speed up syntax highlighting
 set cursorline               " show the focus line
@@ -536,4 +536,16 @@ alsamixer
 ```sh
 # optional
 # pacman -S xf86-video-[intel/nvidia/amdgpu/ati/vesa/nouveau]
+```
+
+### Network problem
+
+related: `/etc/NetworkManager/system-connections/<name>.nmconnection`
+
+```sh
+nmcli connection modify <conn> ipv4.dns "8.8.8.8,1.1.1.1"
+nmcli connection modify <conn> ipv4.ignore-auto-dns yes
+nmcli connection modify <conn> connection.autoconnect yes
+nmcli connection down <conn>
+nmcli connection up <conn>
 ```
