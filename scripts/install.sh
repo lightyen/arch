@@ -101,6 +101,7 @@ mirrorlist() {
 		echo -e "$list" >$mirrorlist
 	fi
 	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
+	pacman -Sy
 }
 
 init_root
