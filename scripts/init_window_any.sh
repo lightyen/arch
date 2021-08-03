@@ -1,27 +1,9 @@
 #!/bin/sh
 
 yes "" | pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip imagemagick plasma
-yes "" | pacman -S fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
+yes "" | pacman -S noto-fonts-cjk noto-fonts-emoji ttf-cascadia-code ttf-sarasa-gothic fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
 
 mkdir -p /usr/local/share/fonts
-
-curl -fsSL https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKtc-hinted.zip -o NotoSansCJKtc-hinted.zip
-if [ -e NotoSansCJKtc-hinted.zip ]; then
-	unzip NotoSansCJKtc-hinted.zip -d NotoSansCJKtc
-	mkdir -p /usr/local/share/fonts/NotoSansCJKtc
-	mv NotoSansCJKtc/*.otf /usr/local/share/fonts/NotoSansCJKtc
-	chmod 644 /usr/local/share/fonts/NotoSansCJKtc/*.otf
-	rm -rf NotoSansCJKtc NotoSansCJKtc-hinted.zip
-fi
-
-curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2106.17/CascadiaCode-2106.17.zip
-if [ -e CascadiaCode-2106.17.zip ]; then
-	unzip CascadiaCode-2106.17.zip -d CascadiaCode
-	mv CascadiaCode/ttf /usr/local/share/fonts/CascadiaCode
-	chmod 644 /usr/local/share/fonts/CascadiaCode/*.ttf
-	rm -rf CascadiaCode
-fi
-
 fc-cache -fv
 
 echo "GTK_IM_MODULE=fcitx" >> /etc/environment
