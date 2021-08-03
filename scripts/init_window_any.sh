@@ -7,19 +7,19 @@ mkdir -p /usr/local/share/fonts
 fc-cache -fv
 
 if [ -z $(printenv | grep GTK_IM_MODULE) ]; then
-	echo "GTK_IM_MODULE=fcitx" >> /etc/environment
+	echo "GTK_IM_MODULE=fcitx" >>/etc/environment
 fi
 
 if [ -z $(printenv | grep QT_IM_MODULE) ]; then
-	echo "QT_IM_MODULE=fcitx" >> /etc/environment
+	echo "QT_IM_MODULE=fcitx" >>/etc/environment
 fi
 
 if [ -z $(printenv | grep XMODIFIERS) ]; then
-	echo "XMODIFIERS=@im=fcitx" >> /etc/environment
+	echo "XMODIFIERS=@im=fcitx" >>/etc/environment
 fi
 
 if [ -z $(printenv | grep GTK_THEME) ]; then
-	echo "GTK_THEME=Breeze-Dark:dark" >> /etc/environment
+	echo "GTK_THEME=Breeze-Dark:dark" >>/etc/environment
 fi
 
 sed -i 's/^Current=$/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf

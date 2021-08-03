@@ -10,7 +10,7 @@ mirrorlist() {
 	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
 
 	if [ $count -gt 0 ]; then
-		echo -e "$list" > $mirrorlist
+		echo -e "$list" >$mirrorlist
 	fi
 	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
 }
@@ -18,8 +18,8 @@ mirrorlist() {
 network() {
 	openssh=$(read -r -p "Install openssh? [y/n] ")
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
-			yes "" | pacman -S openssh
-			systemctl enable sshd
+		yes "" | pacman -S openssh
+		systemctl enable sshd
 	fi
 	yes "" | pacman -S dhcpcd networkmanager
 	systemctl enable dhcpcd
@@ -28,8 +28,7 @@ network() {
 
 setLocaltime() {
 	region_city="Asia/Taipei"
-	while read -r -p "Enter Region/City ($region_city): " timezone
-	do
+	while read -r -p "Enter Region/City ($region_city): " timezone; do
 		if [ -z "$timezone" ] || [ "$locale" == y ]; then
 			ln -sf /usr/share/zoneinfo/$region_city /etc/localtime
 			hwclock --systohc
@@ -47,8 +46,7 @@ setLocaltime() {
 setLocale() {
 	locale_list[0]="en_US"
 	i=1
-	while read -r -p "Enter Locale (${locale_list[*]}): " locale
-	do
+	while read -r -p "Enter Locale (${locale_list[*]}): " locale; do
 		locale=$(echo ${locale} | tr '-' '_')
 		if [ -z "$locale" ] || [ "$locale" == y ]; then
 			break
@@ -61,13 +59,12 @@ setLocale() {
 	done
 
 	sed -E -i 's/^([^#].*)/#\1/' /etc/locale.gen
-	for ((i = 0; i < ${#locale_list[@]}; i++))
-	do
+	for ((i = 0; i < ${#locale_list[@]}; i++)); do
 		sed -E -i "s/^#?(${locale_list[i]}\.UTF-8.*)/\1/" /etc/locale.gen
 	done
 
 	locale-gen
-	echo LANG=en_US.UTF-8 > /etc/locale.conf
+	echo LANG=en_US.UTF-8 >/etc/locale.conf
 }
 
 setHostname() {
@@ -77,10 +74,10 @@ setHostname() {
 	if [ $name == y ]; then
 		name=$default_hostname
 	fi
-	echo -e $name > /etc/hostname
-	echo -e "127.0.0.1\tlocalhost" > /etc/hosts
-	echo -e "::1\t\tlocalhost" >> /etc/hosts
-	echo -e "127.0.1.1\t$name.localdomain\t$name" >> /etc/hosts
+	echo -e $name >/etc/hostname
+	echo -e "127.0.0.1\tlocalhost" >/etc/hosts
+	echo -e "::1\t\tlocalhost" >>/etc/hosts
+	echo -e "127.0.1.1\t$name.localdomain\t$name" >>/etc/hosts
 }
 
 cpuinfo() {
@@ -96,18 +93,18 @@ bootcfg() {
 	model=$(cpuinfo)
 	root=$(df | awk '$6 == "/" {print $1}')
 	cfg=/boot/loader/entries/arch.conf
-	echo default arch > /boot/loader/loader.conf
-	echo title Arch Linux > $cfg
-	echo linux /vmlinuz-linux >> $cfg
+	echo default arch >/boot/loader/loader.conf
+	echo title Arch Linux >$cfg
+	echo linux /vmlinuz-linux >>$cfg
 	if [ $model == "intel" ]; then
 		yes "" | pacman -S intel-ucode
-		echo initrd /intel-ucode.img >> $cfg
+		echo initrd /intel-ucode.img >>$cfg
 	elif [ $model == "amd" ]; then
 		yes "" | pacman -S amd-ucode
-		echo initrd /amd-ucode.img >> $cfg
+		echo initrd /amd-ucode.img >>$cfg
 	fi
-	echo initrd /initramfs-linux.img >> $cfg
-	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >> $cfg
+	echo initrd /initramfs-linux.img >>$cfg
+	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >>$cfg
 	bootctl update
 }
 
@@ -143,13 +140,13 @@ case "$1" in
 	setHostname
 	;;
 "network")
-    network
+	network
 	;;
 "mirrorlist")
 	mirrorlist
 	;;
 "others")
-    others
+	others
 	;;
 *)
 	bootcfg
@@ -161,4 +158,5 @@ case "$1" in
 	others
 	echo "Root password:"
 	passwd
+	;;
 esac
