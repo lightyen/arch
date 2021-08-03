@@ -91,6 +91,21 @@ others() {
     done
 }
 
+mirrorlist() {
+	mirrorlist=/etc/pacman.d/mirrorlist
+	yes "" | pacman -S reflector
+
+	echo "creating mirrorlist..."
+	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
+
+	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
+
+	if [ $count -gt 0 ]; then
+		echo -e "$list" > $mirrorlist
+	fi
+	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
+}
+
 init_root
 init_boot
 init_home

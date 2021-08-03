@@ -2,17 +2,16 @@
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
-	yes "" | pacman -S pacman-contrib
-	curl -fsSL "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
-	sed -i 's/^#\(.*\)/\1/' $mirrorlist
-	cp $mirrorlist $mirrorlist.backup
-	echo "ranking top 5 mirror source..."
-	servers=$(rankmirrors -n 5)
-	count=$(${list} | grep -E "^Server =" | wc -l)
+	yes "" | pacman -S reflector
+
+	echo "creating mirrorlist..."
+	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
+
+	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
+
 	if [ $count -gt 0 ]; then
-		servers > $mirrorlist
+		echo -e "$list" > $mirrorlist
 	fi
-	yes "" | pacman -Rcs pacman-contrib
 	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
 }
 
