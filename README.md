@@ -540,7 +540,7 @@ alsamixer
 
 ### Network problem
 
-related: `/etc/NetworkManager/system-connections/<name>.nmconnection`
+related: `/etc/NetworkManager/system-connections/wired1.nmconnection`
 
 ```sh
 nmcli connection modify <conn> ipv4.dns "8.8.8.8,1.1.1.1"
