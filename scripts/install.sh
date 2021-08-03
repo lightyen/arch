@@ -71,7 +71,7 @@ others() {
     lsblk -o path,parttypename,fstype | grep "Linux filesystem" | while read line
     do
         dev=$(echo $line | awk '{print $1}')
-        fs_type=$(echo $line | awk '{print $3}')
+        fs_type=$(echo $line | awk '{print $4}')
 
         if [ -n $fs_type ]; then
             continue

@@ -1,15 +1,26 @@
 #!/bin/sh
 
 yes "" | pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip imagemagick plasma
-yes "" | pacman -S noto-fonts-cjk noto-fonts-emoji ttf-cascadia-code ttf-sarasa-gothic fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
+yes "" | pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-cascadia-code ttf-sarasa-gothic fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
 
 mkdir -p /usr/local/share/fonts
 fc-cache -fv
 
-echo "GTK_IM_MODULE=fcitx" >> /etc/environment
-echo "QT_IM_MODULE=fcitx" >> /etc/environment
-echo "XMODIFIERS=@im=fcitx" >> /etc/environment
-echo "GTK_THEME=Breeze-Dark:dark" >> /etc/environment
+if [ -z $(printenv | grep GTK_IM_MODULE) ]; then
+	echo "GTK_IM_MODULE=fcitx" >> /etc/environment
+fi
+
+if [ -z $(printenv | grep QT_IM_MODULE) ]; then
+	echo "QT_IM_MODULE=fcitx" >> /etc/environment
+fi
+
+if [ -z $(printenv | grep XMODIFIERS) ]; then
+	echo "XMODIFIERS=@im=fcitx" >> /etc/environment
+fi
+
+if [ -z $(printenv | grep GTK_THEME) ]; then
+	echo "GTK_THEME=Breeze-Dark:dark" >> /etc/environment
+fi
 
 sed -i 's/^Current=$/Current=breeze/' /usr/lib/sddm/sddm.conf.d/default.conf
 sed -i 's/^Numlock=none/Numlock=on/' /usr/lib/sddm/sddm.conf.d/default.conf
