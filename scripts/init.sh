@@ -1,21 +1,5 @@
 #!/bin/sh
 
-mirrorlist() {
-	mirrorlist=/etc/pacman.d/mirrorlist
-	yes "" | pacman -Sy reflector
-
-	echo "creating mirrorlist..."
-	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
-
-	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
-
-	if [ $count -gt 0 ]; then
-		echo -e "$list" >$mirrorlist
-	fi
-	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
-	pacman -Sy
-}
-
 network() {
 	openssh=$(read -r -p "Install openssh? [y/n] ")
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
@@ -143,9 +127,6 @@ case "$1" in
 "network")
 	network
 	;;
-"mirrorlist")
-	mirrorlist
-	;;
 "others")
 	others
 	;;
@@ -155,7 +136,6 @@ case "$1" in
 	setLocaltime
 	setHostname
 	network
-	mirrorlist
 	others
 	echo "Root password:"
 	passwd
