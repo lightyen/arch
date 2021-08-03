@@ -2,7 +2,7 @@
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
-	yes "" | pacman -S reflector
+	yes "" | pacman -Sy reflector
 
 	echo "creating mirrorlist..."
 	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
