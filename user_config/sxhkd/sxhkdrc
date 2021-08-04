@@ -1,10 +1,11 @@
 #
-# wm independent hotkeys
-#
 
 # terminal emulator
 super + Return
 	alacritty
+
+super + KP_Enter
+    microsoft-edge-beta 
 
 # program launcher
 super + @space
@@ -125,3 +126,4 @@ super + r
 
 super + shift + r
     bspc node @/ -R 90
+ 
