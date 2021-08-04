@@ -90,7 +90,7 @@ others() {
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
-	yes "" | pacman -Sy reflector
+	pacman -Sy --noconfirm --needed reflector
 
 	echo "creating mirrorlist..."
 	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
@@ -100,7 +100,7 @@ mirrorlist() {
 	if [ $count -gt 0 ]; then
 		echo -e "$list" >$mirrorlist
 	fi
-	sed -E -i 's/^#(ParallelDownloads.*)/\1/' /etc/pacman.conf
+	sed -E -i 's/^#ParallelDownloads.*/ParallelDownloads = 10/' /etc/pacman.conf
 	pacman -Sy
 }
 
@@ -109,7 +109,6 @@ init_boot
 init_home
 others
 mirrorlist
-sed -E -i "s/^#(ParallelDownloads.*)/\1/" /etc/pacman.conf
 yes "" | pacstrap -i /mnt base linux linux-firmware
 genfstab -U /mnt >/mnt/etc/fstab
 arch-chroot /mnt

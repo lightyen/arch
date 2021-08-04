@@ -1,7 +1,7 @@
 #!/bin/sh
 
-yes "" | pacman -S sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip imagemagick plasma
-yes "" | pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-cascadia-code ttf-sarasa-gothic fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
+pacman -S --noconfirm --needed sddm-kcm xorg bspwm sxhkd picom dmenu nitrogen alacritty lxappearance nautilus file-roller p7zip unzip imagemagick plasma
+pacman -S --noconfirm --needed noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-cascadia-code ttf-sarasa-gothic fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk fcitx5-nord fcitx5-chewing fcitx5-mozc
 
 mkdir -p /usr/local/share/fonts
 fc-cache -fv

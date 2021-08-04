@@ -3,10 +3,10 @@
 network() {
 	openssh=$(read -r -p "Install openssh? [y/n] ")
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
-		yes "" | pacman -S openssh
+		pacman -S --noconfirm --needed openssh
 		systemctl enable sshd
 	fi
-	yes "" | pacman -S dhcpcd networkmanager
+	pacman -S --noconfirm --needed dhcpcd networkmanager
 	systemctl enable dhcpcd
 	systemctl enable NetworkManager
 }
@@ -82,10 +82,10 @@ bootcfg() {
 	echo title Arch Linux >$cfg
 	echo linux /vmlinuz-linux >>$cfg
 	if [ $model == "intel" ]; then
-		yes "" | pacman -S intel-ucode
+		pacman -S --noconfirm --needed intel-ucode
 		echo initrd /intel-ucode.img >>$cfg
 	elif [ $model == "amd" ]; then
-		yes "" | pacman -S amd-ucode
+		pacman -S --noconfirm --needed amd-ucode
 		echo initrd /amd-ucode.img >>$cfg
 	fi
 	echo initrd /initramfs-linux.img >>$cfg
@@ -94,7 +94,7 @@ bootcfg() {
 }
 
 others() {
-	yes "" | pacman -S sudo vim zsh git base-devel
+	pacman -S --noconfirm --needed sudo vim zsh git base-devel
 	HOME=/root
 	echo "vim environment..."
 	cd /root

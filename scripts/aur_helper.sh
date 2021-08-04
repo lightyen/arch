@@ -15,8 +15,8 @@ if [ -e $1/PKGBUILD ]; then
 		exit 1
 	fi
 	if [ -e $target ]; then
-		if ! yes "" | pacman -U $target; then
-			yes "" | pacman -U --asdeps $target
+		if ! pacman -U --noconfirm --needed $target; then
+			pacman -U --asdeps --noconfirm --needed $target
 		fi
 	fi
 	cd -
