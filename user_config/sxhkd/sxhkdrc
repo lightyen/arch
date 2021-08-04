@@ -6,9 +6,6 @@
 super + Return
 	alacritty
 
-ctrl + alt + t
-    alacritty
-
 # program launcher
 super + @space
 	dmenu_run
