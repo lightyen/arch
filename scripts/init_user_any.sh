@@ -4,20 +4,13 @@ set -e
 
 cd $HOME
 
-git clone https://github.com/lightyen/arch.git $HOME/arch
-mkdir -p $HOME/.config
-cp -r $HOME/arch/user_config/* $HOME/.config
-chmod 644 $HOME/.config/sxhkd/sxhkdrc
-chmod 755 $HOME/.config/bspwm/bspwmrc
-rm -rf $HOME/arch
-
-vim_install() {
-	echo "vim environment..."
-	pacman -S --noconfirm --needed vim
-	rm -rf $HOME/.vim
-	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
-	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
-	echo "y" | vim -c 'PluginInstall' -c 'qa!' 1>/dev/null 2>&1
+user_config() {
+	git clone https://github.com/lightyen/arch.git $HOME/arch
+	mkdir -p $HOME/.config
+	cp -r $HOME/arch/user_config/* $HOME/.config
+	chmod 644 $HOME/.config/sxhkd/sxhkdrc
+	chmod 755 $HOME/.config/bspwm/bspwmrc
+	rm -rf $HOME/arch
 }
 
 oh_my_zsh_install() {
@@ -29,3 +22,16 @@ oh_my_zsh_install() {
 	sed -i 's/plugins=(git)/plugins=(git zsh-completions zsh-autosuggestions)/1' $HOME/.zshrc
 	echo "autoload -U compinit && compinit" | zsh
 }
+
+vim_install() {
+	echo "vim environment..."
+	pacman -S --noconfirm --needed vim
+	rm -rf $HOME/.vim
+	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
+	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
+	echo "y" | vim -c 'PluginInstall' -c 'qa!' 1>/dev/null 2>&1
+}
+
+user_config
+oh_my_zsh_install
+vim_install
