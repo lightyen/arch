@@ -13,8 +13,9 @@ user_config() {
 	rm -rf $HOME/arch
 }
 
-oh_my_zsh_install() {
+ohmyzsh_install() {
 	rm -rf $HOME/.oh-my-zsh
+	pacman -S --noconfirm --needed zsh
 	echo "y" | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-completions
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -24,14 +25,24 @@ oh_my_zsh_install() {
 }
 
 vim_install() {
-	echo "vim environment..."
-	pacman -S --noconfirm --needed vim
 	rm -rf $HOME/.vim
+	pacman -S --noconfirm --needed vim
+	echo "vim vundle..."
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
-	echo "y" | vim -c 'PluginInstall' -c 'qa!' 1>/dev/null 2>&1
+	echo "y" | vim +PluginInstall +qa! 1>/dev/null 2>&1
 }
 
-user_config
-oh_my_zsh_install
-vim_install
+case "$1" in
+"ohmyzsh")
+	ohmyzsh_install
+	;;
+"vim")
+	vim_install
+	;;
+*)
+	user_config
+	ohmyzsh_install
+	vim_install
+	;;
+esac
