@@ -1,4 +1,4 @@
-# Dir
+# Files or Directories
 
 - `/etc/fstab`
 - `/etc/pacman.d/mirrorlist`

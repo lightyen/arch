@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 init_root() {
 	dev=$(lsblk -o path,partlabel | grep root | awk '{print $1}')
 	if [ -z $dev ]; then
@@ -90,19 +92,22 @@ others() {
 
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
-	pacman -Sy --noconfirm --needed reflector
+	pacman -Sy --noconfirm --needed --noprogressbar --quiet reflector
 
-	echo "creating mirrorlist..."
+	echo "reflector mirrorlist..."
 	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
-
 	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
 
 	if [ $count -gt 0 ]; then
 		echo -e "$list" >$mirrorlist
+	else
+		echo "no suitable mirror site found."
 	fi
+
 	sed -E -i 's/^#ParallelDownloads.*/ParallelDownloads = 10/' /etc/pacman.conf
 	pacman -Sy
 }
+
 
 init_root
 init_boot
@@ -111,4 +116,4 @@ others
 mirrorlist
 yes "" | pacstrap -i /mnt base linux linux-firmware
 genfstab -U /mnt >/mnt/etc/fstab
-arch-chroot /mnt
+arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh)"

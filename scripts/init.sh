@@ -141,7 +141,7 @@ case "$1" in
 	setHostname
 	network
 	others
-	echo "Root password:"
+	echo -e "\nInit root"
 	passwd
 	;;
 esac
