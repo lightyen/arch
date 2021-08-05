@@ -5,8 +5,8 @@ set -e
 init_root() {
 	dev=$(lsblk -o path,partlabel | grep root | awk '{print $1}')
 	if [ -z $dev ]; then
-		echo "Waring: 'root' is not found."
-		return
+		echo "Error: 'root' is not found."
+		return 1
 	fi
 
 	fs_type="$(blkid -s TYPE -o value $dev)"
@@ -26,6 +26,10 @@ init_root() {
 
 init_boot() {
 	dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
+	if [ -z $dev ]; then
+		echo "Error: 'boot' is not found."
+		return 1
+	fi
 
 	fs_type="$(blkid -s TYPE -o value $dev)"
 	if [ -z $fs_type ]; then
