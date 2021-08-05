@@ -1,13 +1,13 @@
 #!/bin/sh
 
+set -e
 network() {
 	openssh=$(read -r -p "Install openssh? [y/n] ")
 	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
 		pacman -S --noconfirm --needed openssh
 		systemctl enable sshd
 	fi
-	pacman -S --noconfirm --needed dhcpcd networkmanager
-	systemctl enable dhcpcd
+	pacman -S --noconfirm --needed networkmanager
 	systemctl enable NetworkManager
 }
 
