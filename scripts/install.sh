@@ -99,7 +99,7 @@ mirrorlist() {
 	pacman -Sy --noconfirm --needed --noprogressbar --quiet reflector
 
 	echo "reflector mirrorlist..."
-	list=$(reflector -c Taiwan -c Japan -p https -a 12 --sort rate)
+	list=$(reflector -c Taiwan --sort rate --proto http,https --age 24)
 	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
 
 	if [ $count -gt 0 ]; then
