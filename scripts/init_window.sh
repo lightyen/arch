@@ -33,7 +33,7 @@ chmod +x aur_helper
 rm -f aur_helper
 
 curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/mimeapps.list -o /etc/xdg/mimeapps.list
-
+curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/sddm.service -o /usr/lib/systemd/system/sddm.service
 
 isVirtual=$(dmesg | grep 'Hypervisor detected')
 if [[ $isVirtual ]]; then
