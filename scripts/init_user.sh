@@ -2,8 +2,6 @@
 
 set -e
 
-cd $HOME
-
 window_install() {
 	git clone https://github.com/lightyen/arch.git $HOME/arch
 	mkdir -p $HOME/.config
