@@ -5,7 +5,7 @@ set -e
 username=$1
 password=$2
 
-if useradd -m $username -p $password; then
+if useradd -m $username; then
 	echo new user: $username
 fi
 
@@ -25,3 +25,7 @@ if pacman -Q xorg-server 1>/dev/null 2>&1; then
 fi
 
 chsh --shell $(which zsh) $username
+
+if [[ $password ]]; then
+	echo -e "$password\n$password" | passwd $username 1>/dev/null
+fi
