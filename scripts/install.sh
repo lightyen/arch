@@ -87,7 +87,7 @@ others() {
 			mkdir /mnt/data$i
 			mount $dev /mnt/data$i
 			mountpoint=/mnt/data$i
-			i=$(expr $i + 1)
+			i=$(($i + 1))
 		fi
 
 		echo "data: $mountpoint"
