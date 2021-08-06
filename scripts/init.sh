@@ -29,8 +29,8 @@ setLocaltime() {
 }
 
 setLocale() {
-	locale_list[0]="en_US"
-	i=1
+	locale_list=(en_US zh_TW)
+	i=$#locale_list[@]
 	while read -r -p "Enter Locale (${locale_list[*]}): " locale; do
 		locale=$(echo ${locale} | tr '-' '_')
 		if [ -z "$locale" ] || [ "$locale" == y ]; then
