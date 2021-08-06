@@ -8,7 +8,7 @@ password=$2
 useradd -m $username
 
 init_user=$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/init_user.sh)
-runuser -l $username -c "sh -c \"$init_user\" -c \"ohmyzsh\""
+runuser -l $username -c "sh -c \"$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/init_user.sh)\" -c \"ohmyzsh\""
 runuser -l $username -c "sh -c \"$init_user\" -c \"vim\""
 
 if pacman -Q xorg-server 1>/dev/null 2>&1; then
