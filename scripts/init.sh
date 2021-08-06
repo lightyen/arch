@@ -39,7 +39,7 @@ setLocale() {
 			echo -e "Not found: ${locale}.UTF-8"
 		else
 			locale_list[$i]=${locale}
-			i=$(expr $i + 1)
+			i=$(($i + 1))
 		fi
 	done
 
