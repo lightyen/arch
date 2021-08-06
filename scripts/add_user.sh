@@ -12,7 +12,7 @@ runuser -l $username -c "$init_user" -c "ohmyzsh"
 runuser -l $username -c "$init_user" -c "vim"
 
 if pacman -Q xorg-server 1>/dev/null 2>&1; then
-	runuser -l $username -c "$init_user window"
+	runuser -l $username -c "$init_user" -c "window"
 	if dmesg | grep 'Hypervisor detected' 1>/dev/null; then
 		runuser -l $username -c "$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/vbox/.xprofile -o $HOME/.xprofile)"
 	else
