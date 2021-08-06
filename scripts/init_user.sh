@@ -41,4 +41,6 @@ case "$1" in
 "vim")
 	vim_install
 	;;
+*)
+	;;
 esac
