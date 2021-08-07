@@ -5,47 +5,34 @@ set -e
 init_root() {
 	dev=$(lsblk -o path,partlabel | grep root | awk '{print $1}')
 	if [ -z $dev ]; then
-		echo "Error: 'root' is not found."
+		echo "Error: device is not found, please set the name 'root' on the specific partition."
 		return 1
 	fi
 
-	fs_type="$(blkid -s TYPE -o value $dev)"
-	if [ -z $fs_type ]; then
+	if [ -z "$(blkid -s TYPE -o value $dev)" ]; then
 		mkfs.ext4 $dev
 	fi
 
-	mountpoint=$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')
-
-	if [ -z $mountpoint ]; then
+	if [ -z "$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')" ]; then
 		mount $dev /mnt
-		mountpoint=/mnt
 	fi
-
-	echo "root: $mountpoint"
 }
 
 init_boot() {
 	dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
 	if [ -z $dev ]; then
-		echo "Error: 'boot' is not found."
+		echo "Error: device is not found, please set the name 'boot' on the EFI partition."
 		return 1
 	fi
 
-	fs_type="$(blkid -s TYPE -o value $dev)"
-	if [ -z $fs_type ]; then
+	if [ -z "$(blkid -s TYPE -o value $dev)" ]; then
 		mkfs.fat $dev
 	fi
 
-	mountpoint=$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')
-
-	if [ -z $mountpoint ]; then
+	if [ -z "$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')" ]; then
 		mkdir /mnt/boot
 		mount $dev /mnt/boot
-		mountpoint=/mnt/boot
 	fi
-
-	echo "boot: $mountpoint"
-
 }
 
 init_home() {
@@ -54,43 +41,32 @@ init_home() {
 		return
 	fi
 
-	fs_type="$(blkid -s TYPE -o value $dev)"
-	if [ -z $fs_type ]; then
+	if [ -z "$(blkid -s TYPE -o value $dev)" ]; then
 		mkfs.ext4 $dev
 	fi
 
-	mountpoint=$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')
-
-	if [ -z $mountpoint ]; then
+	if [ -z "$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')" ]; then
 		mkdir /mnt/home
 		mount $dev /mnt/home
-		mountpoint=/mnt/home
 	fi
-
-	echo "home: $mountpoint"
 }
 
 others() {
 	i=1
 	lsblk -o path,parttypename,fstype | grep "Linux filesystem" | while read line; do
 		dev=$(echo $line | awk '{print $1}')
-		fs_type=$(echo $line | awk '{print $4}')
 
-		if [ $fs_type ]; then
-			continue
+		if [ -z "$(echo $line | awk '{print $4}')" ]; then
+			mkfs.ext4 $dev
 		fi
 
-		mkfs.ext4 $dev
-		mountpoint=$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')
-
-		if [ -z $mountpoint ]; then
+		if [ -z "$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')" ]; then
 			mkdir /mnt/data$i
 			mount $dev /mnt/data$i
-			mountpoint=/mnt/data$i
 			i=$(($i + 1))
+			echo "data: /mnt/data$i"
 		fi
 
-		echo "data: $mountpoint"
 	done
 }
 
@@ -99,14 +75,15 @@ mirrorlist() {
 	pacman -Syy --noconfirm --noprogressbar --quiet
 	pacman --noconfirm --needed --noprogressbar --quiet reflector
 
-	echo "reflector mirrorlist..."
+	echo "reflector..."
 	list=$(reflector -c Taiwan --sort rate --age 18)
 	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
 
 	if [ $count -gt 0 ]; then
 		echo -e "$list" >$mirrorlist
 	else
-		echo "no suitable mirror site found."
+		echo "no suitable mirror sites."
+		return
 	fi
 
 	sed -E -i 's/^#ParallelDownloads.*/ParallelDownloads = 10/' /etc/pacman.conf

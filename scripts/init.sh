@@ -56,7 +56,7 @@ setHostname() {
 	default_hostname=archlinux
 	read -r -p "Enter hostname ($default_hostname): " name
 	name=${name:-$default_hostname}
-	if [ $name == y ]; then
+	if [ "$name" == y ]; then
 		name=$default_hostname
 	fi
 	echo -e $name >/etc/hostname
@@ -81,10 +81,10 @@ bootcfg() {
 	echo default arch >/boot/loader/loader.conf
 	echo title Arch Linux >$cfg
 	echo linux /vmlinuz-linux >>$cfg
-	if [ $model == "intel" ]; then
+	if [ "$model" == "intel" ]; then
 		pacman -S --noconfirm --needed intel-ucode
 		echo initrd /intel-ucode.img >>$cfg
-	elif [ $model == "amd" ]; then
+	elif [ "$model" == "amd" ]; then
 		pacman -S --noconfirm --needed amd-ucode
 		echo initrd /amd-ucode.img >>$cfg
 	fi
@@ -141,7 +141,7 @@ case "$1" in
 	setHostname
 	network
 	others
-	echo -e "\nInit root"
+	echo -e "\nChange root password..."
 	passwd
 	;;
 esac

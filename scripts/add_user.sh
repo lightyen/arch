@@ -26,6 +26,6 @@ fi
 
 chsh --shell $(which zsh) $username
 
-if [[ $password ]]; then
+if [[ "$password" ]]; then
 	echo -e "$password\n$password" | passwd $username 1>/dev/null
 fi
