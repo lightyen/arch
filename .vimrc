@@ -2,15 +2,15 @@ set encoding=utf-8
 set history=3000
 set ttimeoutlen=50
 
+set autoindent
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set softtabstop=-1
+set noexpandtab
+set hls
 
-set signcolumn=yes
 syntax enable
 syntax on
-set hls
-set termguicolors
 
 filetype off
 set nocompatible
@@ -29,14 +29,26 @@ call vundle#end()
 filetype plugin indent on
 
 if &term == "alacritty"
-    let &term = "xterm-256color"
+	let &term = "xterm-256color"
 endif
+
+if (has("autocmd") && !has("gui_running"))
+	augroup colorset
+		autocmd!
+		let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+		autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+	augroup END
+endif
+
+try
+	colorscheme onedark
+	set termguicolors
+catch /^Vim\%((\a\+)\)\=:E185/
+
+endtry
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-colorscheme onedark
-
 
 set numberwidth=4
 set runtimepath+=$HOME/.vim/plugins/vim-gitgutter
