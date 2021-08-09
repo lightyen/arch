@@ -26,7 +26,7 @@ vim_install() {
 	echo "vim vundle..."
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
-	echo "y" | vim +PluginInstall +qa! 1>/dev/null 2>&1
+	vim +PluginInstall +qa! 1>/dev/null 2>&1
 }
 
 case "$1" in
