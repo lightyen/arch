@@ -3,7 +3,6 @@ set history=3000
 set ttimeoutlen=50
 
 set tabstop=4
-set tabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -30,17 +29,8 @@ call vundle#end()
 filetype plugin indent on
 
 if &term == "alacritty"
-  let &term = "xterm-256color"
+    let &term = "xterm-256color"
 endif
-
-let g:powerline_pycmd = 'py3'
-
-" itchyny/lightline settings
-set laststatus=2
-
-let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ }
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -59,24 +49,17 @@ au VimEnter NERD_tree_1 enew | execute 'NERDTree '.argv()[0]
 
 " NERDTree
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
-
-
-" YouCompleteMe
-let g:ycm_use_clangd = 0
-
-" Prettier
-let g:prettier#autoformat = 1
+            \ "Modified"  : "✹",
+            \ "Staged"    : "✚",
+            \ "Untracked" : "✭",
+            \ "Renamed"   : "➜",
+            \ "Unmerged"  : "═",
+            \ "Deleted"   : "✖",
+            \ "Dirty"     : "✗",
+            \ "Clean"     : "✔︎",
+            \ 'Ignored'   : '☒',
+            \ "Unknown"   : "?"
+            \ }
 
 highlight LineNr guifg=#BD93F9 guibg=#303030
 
@@ -123,6 +106,6 @@ nnoremap <leader>n :NERDTree .<CR>
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
