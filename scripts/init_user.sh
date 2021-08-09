@@ -30,15 +30,8 @@ vim_install() {
 }
 
 case "$1" in
-"window")
-	window_install
-	;;
-"ohmyzsh")
-	ohmyzsh_install
-	;;
-"vim")
-	vim_install
-	;;
-*)
-	;;
+    window) window_install ;;
+    ohmyzsh) ohmyzsh_install ;;
+    vim) vim_install ;;
+    *) ;;
 esac
