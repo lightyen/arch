@@ -9,6 +9,9 @@ set softtabstop=-1
 set noexpandtab
 set hls
 
+set numberwidth=4
+set iskeyword+=-
+
 syntax enable
 syntax on
 
@@ -18,13 +21,16 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'joshdick/onedark.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'prettier/vim-prettier', {
+	\ 'do': 'yarn install',
+	\ 'for': ['javascript']
+	\ }
 call vundle#end()
 filetype plugin indent on
 
@@ -42,7 +48,15 @@ endif
 
 try
 	colorscheme onedark
-	set termguicolors
+	if has("termguicolors")
+		if v:version < 800
+			set t_8b=^[[48;2;%lu;%lu;%lum
+			set t_8f=^[[38;2;%lu;%lu;%lum
+		endif
+
+		" enable true color
+		set termguicolors
+	endif
 catch /^Vim\%((\a\+)\)\=:E185/
 
 endtry
@@ -50,30 +64,9 @@ endtry
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-set numberwidth=4
-set runtimepath+=$HOME/.vim/plugins/vim-gitgutter
-let g:gitgutter_async = 0
-let g:gitgutter_enabled = 0
-set autochdir
-let NERDTreeChDirMode=2
-au VimEnter NERD_tree_1 enew | execute 'NERDTree '.argv()[0]
-
-
-" NERDTree
-let g:NERDTreeIndicatorMapCustom = {
-            \ "Modified"  : "✹",
-            \ "Staged"    : "✚",
-            \ "Untracked" : "✭",
-            \ "Renamed"   : "➜",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "✖",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✔︎",
-            \ 'Ignored'   : '☒',
-            \ "Unknown"   : "?"
-            \ }
-
-highlight LineNr guifg=#BD93F9 guibg=#303030
+if has("autochdir")
+	set autochdir
+endif
 
 set listchars=tab:→\ ,space:\ ,extends:⟩,precedes:⟨
 set list
@@ -105,19 +98,26 @@ set clipboard=unnamedplus
 " Keyboard mapping
 nnoremap <C-c> "+yy
 nnoremap <C-v> "+p
-nnoremap <A-Down> :m+<CR>==
 nnoremap <A-Up> :m .-2<CR>==
+nnoremap <A-Down> :m+<CR>==
 nnoremap <ESC>j :m+<CR>==
 nnoremap <ESC>k :m .-2<CR>==
 nnoremap <F2> :set nu!<CR>
 nnoremap <F4> :set list!<CR>
 nnoremap <F5> :set rnu!<CR>
 nnoremap <F3> :set hlsearch!<CR>
-nnoremap <F9> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTree .<CR>
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+	\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+	\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+
+let g:prettier#config#semi = 'false'
+let g:prettier#config#single_quote = 'false'
+let g:prettier#config#jsx_single_quote = 'false'
+let g:prettier#config#arrow_parens = 'avoid'
+let g:prettier#config#trailing_comma = 'all'
+
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.json,*.graphql,*.md PrettierAsync
 

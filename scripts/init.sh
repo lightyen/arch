@@ -110,6 +110,7 @@ others() {
 	echo "vim vundle..."
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
+	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.editorconfig -o $HOME/.editorconfig
 	echo "y" | vim +PluginInstall +qa! 1>/dev/null 2>&1
 
 	chsh -s /bin/zsh
