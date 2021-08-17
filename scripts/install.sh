@@ -73,7 +73,7 @@ others() {
 mirrorlist() {
 	mirrorlist=/etc/pacman.d/mirrorlist
 	pacman -Syy --noconfirm --noprogressbar --quiet
-	pacman --noconfirm --needed --noprogressbar --quiet reflector
+	pacman -S --noconfirm --needed --noprogressbar --quiet reflector
 
 	echo "reflector..."
 	list=$(reflector -c Taiwan --sort rate --age 18)
