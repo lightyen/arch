@@ -22,17 +22,25 @@
 - `/usr/lib/systemd/system/sddm.service`
 - `/usr/lib/sddm/sddm.conf.d/default.conf`
 
+# Downgrade packages
+
+```sh
+cd /var/cache/pacman/pkg
+# choose previous version
+sudo pacman -U linux-6.5.9.arch2-1-x86_64.pkg.tar.zst
+```
+
 # DPI
 
 Edit `~/.Xresources`:
 
-```
+```sh
 Xft.dpi: 120
 ```
 
 Edit `~/.xprofile`:
 
-```
+```sh
 xsetroot -cursor_name left_ptr && xsetroot -xcf /usr/share/icons/breeze_cursors/cursors/left_ptr 32
 ```
 
