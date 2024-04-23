@@ -5,7 +5,7 @@ super + Return
 	alacritty
 
 super + KP_Enter
-    microsoft-edge-beta 
+    microsoft-edge-stable
 
 # program launcher
 super + @space
@@ -129,4 +129,4 @@ super + r
 
 super + shift + r
     bspc node @/ -R 90
- 
+

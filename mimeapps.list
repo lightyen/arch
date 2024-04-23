@@ -1,19 +1,19 @@
 [Default Applications]
 inode/directory=org.gnome.Nautilus.desktop;
-text/html=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;visual-studio-code.desktop;
+text/html=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;visual-studio-code.desktop;
 text/markdown=visual-studio-code.desktop;
-x-scheme-handler/about=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;
-x-scheme-handler/http=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;
-x-scheme-handler/https=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;
-x-scheme-handler/unknown=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;
+x-scheme-handler/about=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;
+x-scheme-handler/http=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;
+x-scheme-handler/https=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;
+x-scheme-handler/unknown=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;
 x-scheme-handler/mailto=userapp-Thunderbird-AAVYJ0.desktop;userapp-Thunderbird-7XH2J0.desktop;userapp-Thunderbird-0BXLJ0.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-177MU0.desktop;userapp-Telegram Desktop-JUNR70.desktop;
 application/octet-stream=visual-studio-code.desktop;
-application/pdf=microsoft-edge-beta.desktop;google-chrome.desktop;firefox.desktop;isual-studio-code.desktop;
+application/pdf=microsoft-edge-stable.desktop;google-chrome.desktop;firefox.desktop;isual-studio-code.desktop;
 application/x-compressed-tar=org.gnome.FileRoller.desktop;org.gnome.Nautilus.desktop;org.kde.ark.desktop;
 application/x-shellscript=visual-studio-code.desktop;
 application/x-cue=mpv.desktop;
 video/x-matroska=mpv.desktop;
-image/jpeg=microsoft-edge-beta.desktop;
+image/jpeg=microsoft-edge-stable.desktop;
 message/rfc822=userapp-Thunderbird-7XH2J0.desktop;userapp-Thunderbird-0BXLJ0.desktop;userapp-Thunderbird-AAVYJ0.desktop;
 text/csv=visual-studio-code.desktop;

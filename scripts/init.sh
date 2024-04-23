@@ -81,6 +81,7 @@ bootcfg() {
 	echo default arch >/boot/loader/loader.conf
 	echo title Arch Linux >$cfg
 	echo linux /vmlinuz-linux >>$cfg
+
 	if [ "$model" == "intel" ]; then
 		pacman -S --noconfirm --needed intel-ucode
 		echo initrd /intel-ucode.img >>$cfg
@@ -88,17 +89,15 @@ bootcfg() {
 		pacman -S --noconfirm --needed amd-ucode
 		echo initrd /amd-ucode.img >>$cfg
 	fi
+
 	echo initrd /initramfs-linux.img >>$cfg
 	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >>$cfg
 	bootctl update
 }
 
 others() {
-	pacman -S --noconfirm --needed sudo git base-devel
-
 	HOME=/root
 
-	pacman -S --noconfirm --needed zsh
 	echo "y" | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-completions
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -106,8 +105,6 @@ others() {
 	sed -i 's/plugins=(git)/plugins=(zsh-completions zsh-autosuggestions)/1' $HOME/.zshrc
 	echo "autoload -U compinit && compinit" | zsh
 
-	pacman -S --noconfirm --needed vim
-	echo "vim vundle..."
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.editorconfig -o $HOME/.editorconfig

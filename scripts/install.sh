@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/install.sh | sh -
+
 set -e
 
 init_root() {
@@ -96,6 +98,6 @@ init_boot
 init_home
 others
 mirrorlist
-yes "" | pacstrap -i /mnt base linux linux-firmware
+yes "" | pacstrap -i /mnt base base-devel linux linux-firmware efibootmgr zsh vim git
 genfstab -U /mnt >/mnt/etc/fstab
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh)"

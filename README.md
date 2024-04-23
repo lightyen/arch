@@ -7,10 +7,10 @@
 
 ## Insert liveCD
 
-First, switch to pretty terminal font:
+Switch terminal font:
 
 ```sh
-setfont ter-132n.psf.gz
+setfont ter-116n
 ```
 
 Connect to the internet, if wireless, use iwctl:
@@ -30,9 +30,9 @@ timedatectl set-ntp true
 Check devices and create your partitions:
 
 ```sh
-fdisk -l
 gdisk
 cgdisk
+fdisk -l
 ```
 
 Format FAT32, format ext4 file system:
@@ -48,6 +48,7 @@ Mount `root` and `esp` devices:
 ```sh
 # boot=/dev/nvme0n1p1
 # root=/dev/nvme0n1p3
+# home=/dev/nvme0n1p4
 mount $root /mnt
 mkdir /mnt/{boot,home}
 mount $boot /mnt/boot
@@ -438,11 +439,10 @@ echo "XMODIFIERS=@im=fcitx" >> /etc/environment
 pacman -S virtualbox-host-modules-arch
 ```
 
-
 ### Edge
 
 ```sh
-git clone https://aur.archlinux.org/microsoft-edge-beta-bin.git
+git clone https://aur.archlinux.org/microsoft-edge-stable-bin.git
 makepkg -si
 ```
 
