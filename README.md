@@ -167,7 +167,7 @@ systemctl enable bluetooth
 # mirrorlist=/etc/pacman.d/mirrorlist
 
 pacman -S pacman-contrib
-curl -fsSL "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
+curl -fsS "https://archlinux.org/mirrorlist/?country=TW&protocol=https&ip_version=4&ip_version=6" -o $mirrorlist
 sed -i 's/^#\(.*\)/\1/' $mirrorlist
 cp $mirrorlist $mirrorlist.backup
 rankmirrors -n 5 $mirrorlist.backup > $mirrorlist
@@ -200,7 +200,7 @@ pacman -S zsh git
 Install oh-my-zsh:
 
 ```sh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsS https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 Change theme:

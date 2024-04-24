@@ -98,7 +98,7 @@ bootcfg() {
 others() {
 	HOME=/root
 
-	echo "y" | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	echo "y" | sh -c "$(curl -fsS https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-completions
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:=$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 	sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/1' $HOME/.zshrc
@@ -106,8 +106,8 @@ others() {
 	echo "autoload -U compinit && compinit" | zsh
 
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 1>/dev/null 2>&1
-	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
-	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/.editorconfig -o $HOME/.editorconfig
+	curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/.vimrc -o $HOME/.vimrc
+	curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/.editorconfig -o $HOME/.editorconfig
 	echo "y" | vim +PluginInstall +qa! 1>/dev/null 2>&1
 
 	chsh -s /bin/zsh

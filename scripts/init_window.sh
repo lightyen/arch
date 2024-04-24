@@ -32,7 +32,7 @@ pacman -S --noconfirm --needed \
 
 mkdir -p /usr/local/share/fonts
 
-curl -fsSL "https://raw.githubusercontent.com/lightyen/arch/main/scripts/aur_helper.sh" -o aur_helper.sh
+curl -fsS "https://raw.githubusercontent.com/lightyen/arch/main/scripts/aur_helper.sh" -o aur_helper.sh
 chmod +x aur_helper.sh
 ./aur_helper.sh visual-studio-code-bin
 ./aur_helper.sh microsoft-edge-stable-bin
@@ -56,13 +56,13 @@ sed -i 's/^Numlock=none/Numlock=on/' /usr/lib/sddm/sddm.conf.d/default.conf
 
 systemctl enable sddm
 
-curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/mimeapps.list -o /etc/xdg/mimeapps.list
-curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/sddm.service -o /usr/lib/systemd/system/sddm.service
+curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/mimeapps.list -o /etc/xdg/mimeapps.list
+curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/sddm.service -o /usr/lib/systemd/system/sddm.service
 
 # isVirtual=$(dmesg | grep 'Hypervisor detected')
 
 # if [[ $isVirtual ]]; then
-# 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/vbox/picom.conf -o /etc/xdg/picom.conf
+# 	curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/vbox/picom.conf -o /etc/xdg/picom.conf
 # else
-# 	curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/picom.conf -o /etc/xdg/picom.conf
+# 	curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/picom.conf -o /etc/xdg/picom.conf
 # fi
