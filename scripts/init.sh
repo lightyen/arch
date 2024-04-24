@@ -74,6 +74,7 @@ cpuinfo() {
 }
 
 bootcfg() {
+	echo bootctl install...
 	bootctl install
 
 	# prevent security hole
@@ -97,6 +98,7 @@ bootcfg() {
 
 	echo initrd /initramfs-linux.img >>$cfg
 	echo options root=PARTUUID=$(blkid -s PARTUUID -o value $root) rw >>$cfg
+	echo bootctl update...
 	bootctl update
 }
 
