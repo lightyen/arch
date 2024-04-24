@@ -7,7 +7,7 @@ set -e
 init_root() {
 	dev=$(lsblk -o path,partlabel | grep root | awk '{print $1}')
 	if [ -z $dev ]; then
-		echo "Error: device is not found, please set the name 'root' on the specific partition."
+		echo "Error: partition is not found, please set the name 'root' on the specific partition."
 		return 1
 	fi
 
@@ -23,17 +23,19 @@ init_root() {
 init_boot() {
 	dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
 	if [ -z $dev ]; then
-		echo "Error: device is not found, please set the name 'boot' on the EFI partition."
+		echo "Error: partition is not found, please set the name 'boot' on the EFI partition."
 		return 1
 	fi
 
 	if [ -z "$(blkid -s TYPE -o value $dev)" ]; then
+		echo "mkfs.fat $dev"
 		mkfs.fat $dev
 	fi
 
 	if [ -z "$(lsblk -o mountpoint $dev | awk 'BEGIN{FS="\n";RS=""}{print $2}')" ]; then
-		mkdir /mnt/boot
-		mount $dev /mnt/boot
+		if mkdir /mnt/boot; then
+			mount $dev /mnt/boot
+		fi
 	fi
 }
 
@@ -73,16 +75,15 @@ others() {
 }
 
 mirrorlist() {
-	mirrorlist=/etc/pacman.d/mirrorlist
 	pacman -Syy --noconfirm --noprogressbar --quiet
 	pacman -S --noconfirm --needed --noprogressbar --quiet reflector
 
-	echo "reflector..."
-	list=$(reflector -c Taiwan --sort rate --age 18)
+	echo "reflector rating..."
+	list=$(reflector -c Taiwan --protocol http --threads 6 --protocol https --sort rate --age 24)
 	count=$(echo -e "$list" | grep -E "^Server =" | wc -l)
 
 	if [ $count -gt 0 ]; then
-		echo -e "$list" >$mirrorlist
+		echo -e "$list" > /etc/pacman.d/mirrorlist
 	else
 		echo "no suitable mirror sites."
 		return
@@ -91,7 +92,6 @@ mirrorlist() {
 	sed -E -i 's/^#ParallelDownloads.*/ParallelDownloads = 10/' /etc/pacman.conf
 	pacman -Sy
 }
-
 
 init_root
 init_boot
