@@ -97,7 +97,8 @@ init_root
 init_boot
 init_home
 others
-genfstab -U /mnt >/mnt/etc/fstab
-# mirrorlist
+mirrorlist
 yes "" | pacstrap -i /mnt base base-devel linux linux-firmware efibootmgr zsh vim git
+genfstab -U /mnt >/mnt/etc/fstab
+
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh)"
