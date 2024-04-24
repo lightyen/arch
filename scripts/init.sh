@@ -77,10 +77,6 @@ bootcfg() {
 	echo bootctl install...
 	bootctl install
 
-	# prevent security hole
-	chmod o-rwx /boot/loader/random-seed
-	chmod o-rwx /boot
-
 	model=$(cpuinfo)
 	root=$(df | awk '$6 == "/" {print $1}')
 	cfg=/boot/loader/entries/arch.conf

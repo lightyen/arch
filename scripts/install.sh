@@ -99,6 +99,11 @@ init_home
 others
 mirrorlist
 yes "" | pacstrap -i /mnt base base-devel linux linux-firmware efibootmgr zsh vim git
+
+# prevent security hole
+chmod o-rwx /mnt/boot/loader/random-seed
+chmod o-rwx /mnt/boot
+
 genfstab -U /mnt >/mnt/etc/fstab
 
-arch-chroot /mnt sh -c "$(curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh)"
+arch-chroot /mnt curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh | sh -
