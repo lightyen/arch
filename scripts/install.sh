@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# curl -fsSL https://raw.githubusercontent.com/lightyen/arch/main/scripts/install.sh | sh -
+# curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/scripts/install.sh | sh -
 
 set -e
 
