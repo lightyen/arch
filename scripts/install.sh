@@ -20,7 +20,7 @@ init_root() {
 	fi
 }
 
-init_boot() {
+init_efi() {
 	dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
 	if [ -z $dev ]; then
 		echo "Error: partition is not found, please set the name 'boot' on the EFI partition."
@@ -76,7 +76,7 @@ others() {
 
 mirrorlist() {
 	pacman -Syy --noconfirm --noprogressbar --quiet
-	pacman -S --noconfirm --needed --noprogressbar --quiet reflector
+	pacman -S --noconfirm --noprogressbar --quiet reflector
 
 	echo "reflector rating..."
 	list=$(reflector -c Taiwan --protocol http --threads 6 --protocol https --sort rate --age 24)
@@ -93,16 +93,18 @@ mirrorlist() {
 	pacman -Sy
 }
 
-prevent_security_hole() {
-	dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
-	if [ -z $dev ]; then
-		echo "Error: partition is not found, please set the name 'boot' on the EFI partition."
-		return 1
-	fi
+fstab() {
+	genfstab -U /mnt >/mnt/etc/fstab
 
-	umount /mnt/boot
-	sed -E -i 's/fmask=0022,dmask=0022/fmask=0137,dmask=0027/' /mnt/etc/fstab
-	mount $dev /mnt/boot
+	# dev=$(lsblk -o path,partlabel | grep boot | awk '{print $1}')
+	# if [ -z $dev ]; then
+	# 	echo "Error: partition is not found, please set the name 'boot' on the EFI partition."
+	# 	return 1
+	# fi
+
+	# umount /mnt/boot
+	# sed -E -i 's/fmask=0022,dmask=0022/fmask=0137,dmask=0027/' /mnt/etc/fstab
+	# mount $dev /mnt/boot
 }
 
 init_root
@@ -110,9 +112,7 @@ init_boot
 init_home
 others
 mirrorlist
-yes "" | pacstrap -i /mnt base base-devel linux linux-firmware efibootmgr zsh vim git
-
-genfstab -U /mnt >/mnt/etc/fstab
-prevent_security_hole
+yes "" | pacstrap -i /mnt base base-devel linux linux-firmware efibootmgr openssh networkmanager zsh vim git
+fstab
 
 arch-chroot /mnt curl -fsS https://raw.githubusercontent.com/lightyen/arch/main/scripts/init.sh | sh -

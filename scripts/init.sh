@@ -1,13 +1,8 @@
 #!/bin/sh
 
 set -e
+
 network() {
-	openssh=$(read -r -p "Install openssh? [y/n] ")
-	if [ "$openssh" != n ] && [ "$openssh" != N ]; then
-		pacman -S --noconfirm --needed openssh
-		systemctl enable sshd
-	fi
-	pacman -S --noconfirm --needed networkmanager
 	systemctl enable NetworkManager
 }
 
@@ -85,10 +80,10 @@ bootcfg() {
 	echo linux /vmlinuz-linux >>$cfg
 
 	if [ "$model" == "intel" ]; then
-		pacman -S --noconfirm --needed intel-ucode
+		pacman -S --noconfirm --noprogressbar --needed intel-ucode
 		echo initrd /intel-ucode.img >>$cfg
 	elif [ "$model" == "amd" ]; then
-		pacman -S --noconfirm --needed amd-ucode
+		pacman -S --noconfirm --noprogressbar --needed amd-ucode
 		echo initrd /amd-ucode.img >>$cfg
 	fi
 
@@ -137,10 +132,10 @@ case "$1" in
 	;;
 *)
 	bootcfg
+	network
 	setLocale
 	setLocaltime
 	setHostname
-	network
 	others
 	echo -e "\nChange root password..."
 	passwd
